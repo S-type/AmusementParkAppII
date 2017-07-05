@@ -27,7 +27,7 @@ protocol SetDiscountAccessible {
     init(discountOnFood: Int, discountOnMerchandise: Int)
 }
 
-                                                                ///ENTRANT ACCESS DATA
+                                                                ///ENTRANT ACCESS DAT
 class AreaAcces: SetAreaAccessible {
     
     let amusementArea: Bool
