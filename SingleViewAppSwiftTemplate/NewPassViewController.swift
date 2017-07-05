@@ -307,7 +307,7 @@ class NewPassViewController: UIViewController, AccessControllable {
             accessControl(for: .hourlyEmployeeMaintenance)
         }
         
-        if entrantTypeLabel.text == "Mana" {
+        if entrantTypeLabel.text == "Manager" {
             accessControl(for: .manager)
         }
     }

@@ -141,7 +141,7 @@ class ViewController: UIViewController {
     lazy var managerButton: UIButton = {
         let managerButton = UIButton(type: .system)
         managerButton.isHidden = true
-        managerButton.setTitle("Mana", for: .normal)
+        managerButton.setTitle("Manager", for: .normal)
         let selector = #selector(showRequiredField)
         return managerButton
         
