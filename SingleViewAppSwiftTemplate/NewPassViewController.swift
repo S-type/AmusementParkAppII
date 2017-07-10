@@ -37,6 +37,7 @@ class NewPassViewController: UIViewController, AccessControllable {
     
     var entrantDiscountFoodData: Int = 0
     var entrantDiscountMerchandiseData: Int = 0
+    var birthInfo: String?
     
     var merchDiscountPassCheck: String = ""
     var foodDiscountPassCheck: String = ""
@@ -114,7 +115,10 @@ class NewPassViewController: UIViewController, AccessControllable {
         return labelTestResults
     }()
     
-    
+    lazy var personalizedMessageLabel: UILabel = {
+        let labelPerson = UILabel()
+        return labelPerson
+    }()
                                                 ///ACCESS TESTING BUTTONS
     
     lazy var amusementAreaButton: UIButton = {
@@ -192,6 +196,7 @@ class NewPassViewController: UIViewController, AccessControllable {
     override func viewDidLoad() {
         super.viewDidLoad()
         addEntrantData()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -209,7 +214,7 @@ class NewPassViewController: UIViewController, AccessControllable {
         entrantDiscountMerchadiseLabel.text = "·\(entrantDiscountMerchandiseData)% Merch Discount"
 
     }
-                                            ///SWIPE + ACCESS CONTROL PROTOCOL METHODS
+                                            ///SWIPE + ACCESS CONTROL METHODS
 
     func accessControl(for entrant: EntrantType) {
     
@@ -293,6 +298,12 @@ class NewPassViewController: UIViewController, AccessControllable {
         
         if entrantTypeLabel.text == "Free Child" {
             accessControl(for: .freeChildGuest)
+            
+            if let info = birthInfo {
+                personalizedMessageLabel.text = "\(info)"
+            }else{
+                personalizedMessageLabel.text = ""
+            }
         }
         
         if entrantTypeLabel.text == "Food Service" {

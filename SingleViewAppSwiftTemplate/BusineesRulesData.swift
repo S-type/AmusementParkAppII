@@ -7,11 +7,25 @@
 //
 
 import Foundation
+import UIKit
                                                                 ///ERROR TYPES
 
 enum PassError: Error {
     case filledInformationRequired
     case filledBirthInformationRequired
+}
+                                                                ///COLOR SELECTION BY ENUM AND ASSOCIATED VALUE
+enum ColorSelection {
+    
+    case white(white: CGFloat, alpha: CGFloat)
+    case gray(white: CGFloat, alpha: CGFloat)
+    
+    func getColor() -> UIColor {
+        switch self {
+        case .white(let white, let alpha): return UIColor(white: white, alpha: alpha)
+        case .gray(let white, let alpha): return UIColor(white: white, alpha: alpha)
+         }
+    }
 }
                                                                 ///PROTOCOL INITIALIZERS
 

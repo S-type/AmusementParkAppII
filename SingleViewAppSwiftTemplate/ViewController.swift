@@ -9,67 +9,70 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
                                              ///TEXTFIELDS
     
     lazy var birthDateField: UITextField = {
         let fieldBirth = UITextField()
-        fieldBirth.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldBirth.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
+        let month: Int = 0
+        let day: Int = 0
+        let year: Int = 0
+        fieldBirth.text = "\(month)/\(day)/\(year)"
         return fieldBirth
     }()
     
     lazy var snnField: UITextField = {
         let fieldSnn = UITextField()
-        fieldSnn.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldSnn.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldSnn
     }()
     
     lazy var projectField: UITextField = {
         let fieldProject = UITextField()
-        fieldProject.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldProject.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldProject
     }()
     
     lazy var firstNameField: UITextField = {
         let fieldFirstName = UITextField()
-        fieldFirstName.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldFirstName.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldFirstName
         
     }()
     
     lazy var lastNameField: UITextField = {
         let fieldLastName = UITextField()
-        fieldLastName.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldLastName.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldLastName
     }()
     
     lazy var companyField: UITextField = {
         let fieldCompany = UITextField()
-        fieldCompany.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldCompany.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldCompany
     }()
     
     lazy var streetAddressField: UITextField = {
         let fieldStreetAddress = UITextField()
-       fieldStreetAddress.backgroundColor = UIColor(white: 0, alpha: 0)
+       fieldStreetAddress.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldStreetAddress
     }()
     
     lazy var cityField: UITextField = {
         let fieldCity = UITextField()
-        fieldCity.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldCity.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldCity
     }()
     
     lazy var stateField: UITextField = {
         let fieldState = UITextField()
-        fieldState.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldState.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldState
     }()
     
     lazy var zipCodeField: UITextField = {
         let fieldZipCode = UITextField()
-        fieldZipCode.backgroundColor = UIColor(white: 0, alpha: 0)
+        fieldZipCode.backgroundColor = ColorSelection.white(white: 0.6, alpha: 0.8).getColor()
         return fieldZipCode
     }()                                      ///GUEST BUTTONS
     
@@ -155,9 +158,10 @@ class ViewController: UIViewController {
         
     }()
     
-    lazy var populateDateButton: UIButton = {
-        let dateButton = UIButton(type: .system)
-        return dateButton
+    lazy var populateDataButton: UIButton = {
+        let dataButton = UIButton(type: .system)
+        let selector = #selector(populateData)
+        return dataButton
         
     }()
     
@@ -190,6 +194,14 @@ class ViewController: UIViewController {
         employeeRideServicesSubButton.isHidden = false
         employeeMaintenanceSubButton.isHidden = false
     }
+                                             ///POPULATE DATA
+    func populateData() {
+        
+        let birthDate = addDate()
+        birthDateField.text = "\(birthDate)"
+        firstNameField.text = "First Name"
+        lastNameField.text = "Last Name"
+    }
     
     
                                             ///SHOW REQUIRED FIELD METHOD
@@ -197,15 +209,15 @@ class ViewController: UIViewController {
     func showRequiredField()  {
         
         if employeeFoodServicesSubButton.isSelected || employeeRideServicesSubButton.isSelected || employeeMaintenanceSubButton.isSelected || managerButton.isSelected{
-            firstNameField.backgroundColor = UIColor(white: 10, alpha: 10)
-            lastNameField.backgroundColor = UIColor(white: 10, alpha: 10)
-            streetAddressField.backgroundColor = UIColor(white: 10, alpha: 10)
-            cityField.backgroundColor = UIColor(white: 10, alpha: 10)
-            stateField.backgroundColor = UIColor(white: 10, alpha: 10)
-            zipCodeField.backgroundColor = UIColor(white: 10, alpha: 10)
+            firstNameField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
+            lastNameField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
+            streetAddressField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
+            cityField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
+            stateField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
+            zipCodeField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
             
         }else if freeChildSubButton.isSelected {
-            birthDateField.backgroundColor = UIColor(white: 10, alpha: 10)
+            birthDateField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
             
         }else{
             print("No personal information required")
@@ -214,17 +226,16 @@ class ViewController: UIViewController {
     }
                                             ///CHECK FIELDS METHOD
 
-    
     func checkIfRightFieldIsFilled() {
         
         do{
        
         if let firstName = firstNameField.text, let lastName = lastNameField.text, let streetAddress = streetAddressField.text, let city = cityField.text, let state = stateField.text, let zipCode = zipCodeField.text, let birthDate = birthDateField.text {
             
-            if firstName == "" && lastName == "" && streetAddress == "" && city == "" && state == "" && zipCode == "" {
+            if firstName == "" && lastName == "" && streetAddress == "" && city == "" && state == "" && zipCode == "" && (employeeFoodServicesSubButton.isSelected || employeeRideServicesSubButton.isSelected || employeeMaintenanceSubButton.isSelected || managerButton.isSelected) {
                 throw PassError.filledInformationRequired
             
-            }else if birthDate == "" {
+            }else if birthDate == "" && (freeChildSubButton.isSelected) {
                 throw PassError.filledBirthInformationRequired
             }else{
                 performSegue(withIdentifier: "segue", sender: nil)
@@ -291,7 +302,7 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.vipGuest.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.vipGuest.entrantDiscountAccess.discountOnMerchandise
             
-        }else{
+        }else if freeChildSubButton.isHighlighted{
             newPassViewController.entrantTypeData = freeChildSubButton.titleLabel!.text!
             if EntrantType.freeChildGuest.entrantRideAccess.accessAllRides == true || EntrantType.freeChildGuest.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -303,9 +314,12 @@ class ViewController: UIViewController {
             
             newPassViewController.entrantDiscountFoodData = EntrantType.freeChildGuest.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.freeChildGuest.entrantDiscountAccess.discountOnMerchandise
+            
+            let birthDate = addDate()
+            if birthDateField.text == birthDate {
+                newPassViewController.birthInfo = "Dear Guest,all the best for your SPECIAL DAY in our Park"
+            }
         }
-        
-        
         if employeeFoodServicesSubButton.isHighlighted{
             newPassViewController.entrantTypeData = employeeFoodServicesSubButton.titleLabel!.text!
             if EntrantType.hourlyEmployeeFoodService.entrantRideAccess.accessAllRides == true || EntrantType.hourlyEmployeeFoodService.entrantRideAccess.skipAllRideLines == true {
@@ -332,7 +346,7 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.hourlyEmployeeRideService.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.hourlyEmployeeRideService.entrantDiscountAccess.discountOnMerchandise
             
-        }else{
+        }else if employeeMaintenanceSubButton.isHighlighted{
             newPassViewController.entrantTypeData = employeeMaintenanceSubButton.titleLabel!.text!
             if EntrantType.hourlyEmployeeMaintenance.entrantRideAccess.accessAllRides == true || EntrantType.hourlyEmployeeMaintenance.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -363,6 +377,17 @@ class ViewController: UIViewController {
 
         }
     }
+    
+    
+    func addDate() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let year = calendar.component(.year, from: date)
+        return "\(month)/\(day)/\(year)"
+    }
+    
 }
 
 
