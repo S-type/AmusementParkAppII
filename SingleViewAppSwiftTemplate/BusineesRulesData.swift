@@ -19,12 +19,17 @@ enum ColorSelection {
     
     case white(white: CGFloat, alpha: CGFloat)
     case gray(white: CGFloat, alpha: CGFloat)
+    case purple(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
+    case green(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
+
     
     func getColor() -> UIColor {
         switch self {
         case .white(let white, let alpha): return UIColor(white: white, alpha: alpha)
         case .gray(let white, let alpha): return UIColor(white: white, alpha: alpha)
-         }
+        case .purple(let red, let green, let blue, let alpha): return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        case .green(let red, let green, let blue, let alpha): return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        }
     }
 }
                                                                 ///PROTOCOL INITIALIZERS
