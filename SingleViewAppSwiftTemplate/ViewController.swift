@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     let generatePassView = UIView()
     
@@ -36,74 +36,89 @@ class ViewController: UIViewController {
     let cityStateZipViewLine = UIView()
     
     let navigateButtonsStackView = UIStackView()
+    
+    let markedButtonTitleColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
+    let unMarkedButtonTitleColor = ColorSelection.white(white: 0.8, alpha: 0.8).getColor()
+    let markedFieldLabelColor = ColorSelection.gray(white: 0.3, alpha: 0.9).getColor()
+    let unMarkedFieldLabelColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
+    
+    let unMarkedTextFieldColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
+    
+    let yearBirthField : Int = 0
+
 
                                              ///TEXTFIELDS
     
     lazy var birthDateField: UITextField = {
         let fieldBirth = UITextField()
-        let month: Int = 0
-        let day: Int = 0
-        let year: Int = 0
-        fieldBirth.text = "\(month)/\(day)/\(year)"
-        
+        fieldBirth.placeholder = "MM/DD/YYYY"
+        fieldBirth.font = UIFont(name: (fieldBirth.font?.fontName)!, size: 15.0)
+        fieldBirth.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
         fieldBirth.layer.borderWidth = 1.3
         fieldBirth.layer.cornerRadius = 2.5
         fieldBirth.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldBirth.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldBirth.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldBirth.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldBirth
     }()
     
     lazy var birthDateLabel: UILabel = {
         let labelBirth = UILabel()
-        labelBirth.textColor = ColorSelection.gray(white: 0.5, alpha: 1.0).getColor()
+        labelBirth.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelBirth.text = "Date of Birth"
+        labelBirth.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelBirth
     }()
     
-    lazy var snnField: UITextField = {
-        let fieldSnn = UITextField()
-        
-        fieldSnn.layer.borderWidth = 1.3
-        fieldSnn.layer.cornerRadius = 2.5
-        fieldSnn.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldSnn.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
-        fieldSnn.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
-        return fieldSnn
+    lazy var ssnField: UITextField = {
+        let fieldSsn = UITextField()
+        fieldSsn.placeholder = "###-##-####"
+        fieldSsn.font = UIFont(name: (fieldSsn.font?.fontName)!, size: 15.0)
+        fieldSsn.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        fieldSsn.layer.borderWidth = 1.3
+        fieldSsn.layer.cornerRadius = 2.5
+        fieldSsn.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
+        fieldSsn.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
+        fieldSsn.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
+        return fieldSsn
     }()
     
-    lazy var snnLabel: UILabel = {
-        let labelSnn = UILabel()
-        labelSnn.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
-        labelSnn.text = "SSN"
-        return labelSnn
+    lazy var ssnLabel: UILabel = {
+        let labelSsn = UILabel()
+        labelSsn.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
+        labelSsn.text = "SSN"
+        labelSsn.font = UIFont.boldSystemFont(ofSize: 16.0)
+        return labelSsn
     }()
     
     lazy var projectField: UITextField = {
         let fieldProject = UITextField()
-        
+        fieldProject.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        fieldProject.placeholder = "#######"
+        fieldProject.font = UIFont(name: (fieldProject.font?.fontName)!, size: 15.0)
         fieldProject.layer.borderWidth = 1.3
         fieldProject.layer.cornerRadius = 2.5
         fieldProject.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldProject.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldProject.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldProject.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldProject
     }()
     
     lazy var projectLabel: UILabel = {
         let labelProject = UILabel()
-        labelProject.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelProject.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelProject.text = "Project#"
+        labelProject.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelProject
     }()
     
     lazy var firstNameField: UITextField = {
         let fieldFirstName = UITextField()
-        
+        fieldFirstName.font = UIFont(name: (fieldFirstName.font?.fontName)!, size: 15.0)
         fieldFirstName.layer.borderWidth = 1.3
         fieldFirstName.layer.cornerRadius = 2.5
         fieldFirstName.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldFirstName.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldFirstName.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldFirstName.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldFirstName
         
@@ -111,117 +126,124 @@ class ViewController: UIViewController {
     
     lazy var firstNameLabel: UILabel = {
         let labelFirstName = UILabel()
-        labelFirstName.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelFirstName.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelFirstName.text = "First Name"
+        labelFirstName.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelFirstName
         
     }()
     
     lazy var lastNameField: UITextField = {
         let fieldLastName = UITextField()
-        
+        fieldLastName.font = UIFont(name: (fieldLastName.font?.fontName)!, size: 15.0)
         fieldLastName.layer.borderWidth = 1.3
         fieldLastName.layer.cornerRadius = 2.5
         fieldLastName.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldLastName.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldLastName.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldLastName.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldLastName
     }()
     
     lazy var lastNameLabel: UILabel = {
         let labelLastName = UILabel()
-        labelLastName.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelLastName.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelLastName.text = "Last Name"
+        labelLastName.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelLastName
     }()
     
     lazy var companyField: UITextField = {
         let fieldCompany = UITextField()
-        
+        fieldCompany.font = UIFont(name: (fieldCompany.font?.fontName)!, size: 15.0)
         fieldCompany.layer.borderWidth = 1.3
         fieldCompany.layer.cornerRadius = 2.5
         fieldCompany.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldCompany.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldCompany.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldCompany.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldCompany
     }()
     
     lazy var companyLabel: UILabel = {
         let labelCompany = UILabel()
-        labelCompany.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelCompany.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelCompany.text = "Company"
+        labelCompany.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelCompany
     }()
     
     lazy var streetAddressField: UITextField = {
         let fieldStreetAddress = UITextField()
-        
+        fieldStreetAddress.font = UIFont(name: (fieldStreetAddress.font?.fontName)!, size: 15.0)
         fieldStreetAddress.layer.borderWidth = 1.3
         fieldStreetAddress.layer.cornerRadius = 2.5
         fieldStreetAddress.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldStreetAddress.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldStreetAddress.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldStreetAddress.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldStreetAddress
     }()
     
     lazy var streetAddressLabel: UILabel = {
         let labelStreetAddress = UILabel()
-        labelStreetAddress.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelStreetAddress.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelStreetAddress.text = "Street Address"
+        labelStreetAddress.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelStreetAddress
     }()
     
     lazy var cityField: UITextField = {
         let fieldCity = UITextField()
-        
+        fieldCity.font = UIFont(name: (fieldCity.font?.fontName)!, size: 15.0)
         fieldCity.layer.borderWidth = 1.3
         fieldCity.layer.cornerRadius = 2.5
         fieldCity.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldCity.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldCity.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldCity.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldCity
     }()
     
     lazy var cityLabel: UILabel = {
         let labelCity = UILabel()
-        labelCity.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelCity.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelCity.text = "City"
+        labelCity.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelCity
     }()
     
     lazy var stateField: UITextField = {
         let fieldState = UITextField()
-        
+        fieldState.font = UIFont(name: (fieldState.font?.fontName)!, size: 15.0)
         fieldState.layer.borderWidth = 1.3
         fieldState.layer.cornerRadius = 2.5
         fieldState.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldState.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldState.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldState.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldState
     }()
     
     lazy var stateLabel: UILabel = {
         let labelState = UILabel()
-        labelState.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelState.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelState.text = "State"
+        labelState.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelState
     }()
     
     lazy var zipCodeField: UITextField = {
         let fieldZipCode = UITextField()
-        
+        fieldZipCode.font = UIFont(name: (fieldZipCode.font?.fontName)!, size: 15.0)
         fieldZipCode.layer.borderWidth = 1.3
         fieldZipCode.layer.cornerRadius = 2.5
         fieldZipCode.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-        fieldZipCode.addTarget(self, action: #selector(ViewController.tranformTextFieldEditBegan), for: .editingDidBegin)
+        fieldZipCode.layer.sublayerTransform = CATransform3DMakeTranslation(15.0, 0.0, 0.0)
         fieldZipCode.addTarget(self, action: #selector(ViewController.transformTextFieldEditEnd), for: .editingDidEnd)
         return fieldZipCode
     }()
     
     lazy var zipCodeLabel: UILabel = {
         let labelZipCode = UILabel()
-        labelZipCode.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+        labelZipCode.textColor = ColorSelection.gray(white: 0.55, alpha: 0.9).getColor()
         labelZipCode.text = "Zip Code"
+        labelZipCode.font = UIFont.boldSystemFont(ofSize: 16.0)
         return labelZipCode
     }()
                                             ///GUEST BUTTONS
@@ -229,8 +251,9 @@ class ViewController: UIViewController {
     lazy var guestButton: UIButton = {
         let buttonGuest = UIButton(type: .system)
         buttonGuest.backgroundColor = ColorSelection.purple(red: 0.50, green: 0.40, blue: 0.60, alpha: 0.9).getColor()
-        buttonGuest.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         buttonGuest.setTitle("Guest", for: .normal)
+        buttonGuest.tintColor = ColorSelection.white(white: 0.8, alpha: 0.8).getColor()
+        buttonGuest.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
         buttonGuest.addTarget(self, action: #selector(ViewController.showCorrectSubButtons), for: .touchUpInside)
         return buttonGuest
     }()
@@ -240,7 +263,7 @@ class ViewController: UIViewController {
         subButtonClassicGuest.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonClassicGuest.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonClassicGuest.setTitle("Classic", for: .normal)
-        let selector = #selector(showRequiredField)
+        subButtonClassicGuest.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonClassicGuest
     }()
     
@@ -249,7 +272,7 @@ class ViewController: UIViewController {
         subButtonVipGuest.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonVipGuest.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonVipGuest.setTitle("VIP", for: .normal)
-        let selector = #selector(showRequiredField)
+        subButtonVipGuest.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonVipGuest
     }()
     
@@ -258,7 +281,7 @@ class ViewController: UIViewController {
         subButtonFreeChild.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonFreeChild.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonFreeChild.setTitle("Free Child", for: .normal)
-        let selector = #selector(showRequiredField)
+        subButtonFreeChild.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonFreeChild
     }()
     
@@ -267,6 +290,7 @@ class ViewController: UIViewController {
         subButtonSeasonGuest.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonSeasonGuest.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonSeasonGuest.setTitle("Season Pass Guest", for: .normal)
+        subButtonSeasonGuest.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonSeasonGuest
     }()
     
@@ -275,6 +299,7 @@ class ViewController: UIViewController {
         subButtonSenior.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonSenior.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonSenior.setTitle("Senior Guest", for: .normal)
+        subButtonSenior.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonSenior
         
     }()
@@ -283,8 +308,9 @@ class ViewController: UIViewController {
     lazy var employeeButton: UIButton = {
         let buttonEmployee = UIButton(type: .system)
         buttonEmployee.backgroundColor = ColorSelection.purple(red: 0.50, green: 0.40, blue: 0.60, alpha: 0.9).getColor()
-        buttonEmployee.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         buttonEmployee.setTitle("Employee", for: .normal)
+        buttonEmployee.tintColor = ColorSelection.white(white: 0.8, alpha: 0.8).getColor()
+        buttonEmployee.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
         buttonEmployee.addTarget(self, action: #selector(ViewController.showCorrectSubButtons), for: .touchUpInside)
         return buttonEmployee
         
@@ -295,7 +321,7 @@ class ViewController: UIViewController {
         subButtonEmployeeFoodService.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonEmployeeFoodService.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonEmployeeFoodService.setTitle("Food Service", for: .normal)
-        let selector = #selector(showRequiredField)
+        subButtonEmployeeFoodService.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonEmployeeFoodService
     }()
     
@@ -304,7 +330,7 @@ class ViewController: UIViewController {
         subButtonEmployeeRideService.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonEmployeeRideService.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonEmployeeRideService.setTitle("Ride Service", for: .normal)
-        let selector = #selector(showRequiredField)
+        subButtonEmployeeRideService.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonEmployeeRideService
         
     }()
@@ -314,7 +340,7 @@ class ViewController: UIViewController {
         subButtonEmployeeMaintenance.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonEmployeeMaintenance.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonEmployeeMaintenance.setTitle("Maintenance", for: .normal)
-        let selector = #selector(showRequiredField)
+        subButtonEmployeeMaintenance.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonEmployeeMaintenance
     }()
     
@@ -323,15 +349,18 @@ class ViewController: UIViewController {
         subButtonContractEmployee.backgroundColor = ColorSelection.purple(red: 0.16, green: 0.12, blue: 0.22, alpha: 0.9).getColor()
         subButtonContractEmployee.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         subButtonContractEmployee.setTitle("Contract Employee", for: .normal)
+        subButtonContractEmployee.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return subButtonContractEmployee
     }()
     
     lazy var managerButton: UIButton = {
         let buttonManager = UIButton(type: .system)
         buttonManager.backgroundColor = ColorSelection.purple(red: 0.50, green: 0.40, blue: 0.60, alpha: 0.9).getColor()
-        buttonManager.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
         buttonManager.setTitle("Manager", for: .normal)
+        buttonManager.tintColor = ColorSelection.white(white: 0.8, alpha: 0.8).getColor()
+        buttonManager.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
         buttonManager.addTarget(self, action: #selector(ViewController.showCorrectSubButtons), for: .touchUpInside)
+        buttonManager.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return buttonManager
         
     }()
@@ -339,9 +368,11 @@ class ViewController: UIViewController {
     lazy var vendorButton: UIButton = {
         let buttonVendor = UIButton(type: .system)
         buttonVendor.backgroundColor = ColorSelection.purple(red: 0.50, green: 0.40, blue: 0.60, alpha: 0.9).getColor()
-        buttonVendor.tintColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-        buttonVendor .setTitle("Vendor", for: .normal)
+        buttonVendor.setTitle("Vendor", for: .normal)
+        buttonVendor.tintColor = ColorSelection.white(white: 0.8, alpha: 0.8).getColor()
+        buttonVendor.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
         buttonVendor.addTarget(self, action: #selector(ViewController.showCorrectSubButtons), for: .touchUpInside)
+        buttonVendor.addTarget(self, action: #selector(ViewController.showRequiredField), for: .touchUpInside)
         return buttonVendor
     }()
     
@@ -351,8 +382,9 @@ class ViewController: UIViewController {
         let passButton = UIButton(type: .system)
         passButton.backgroundColor = ColorSelection.green(red: 0.15, green: 0.55, blue: 0.52, alpha: 0.8).getColor()
         passButton.setTitleColor(ColorSelection.gray(white: 0.9, alpha: 1.0).getColor(), for: .normal)
+        passButton.layer.cornerRadius = 2.5
         passButton.setTitle("Generate Pass", for: .normal)
-        let selector = #selector(checkIfRightFieldIsFilled)
+        passButton.addTarget(self, action: #selector(ViewController.checkIfRightFieldIsFilled), for: .touchUpInside)
         return passButton
     }()
     
@@ -360,55 +392,260 @@ class ViewController: UIViewController {
         let dataButton = UIButton(type: .system)
         dataButton.backgroundColor = ColorSelection.gray(white: 0.9, alpha: 1.0).getColor()
         dataButton.setTitleColor(ColorSelection.green(red: 0.15, green: 0.55, blue: 0.52, alpha: 0.8).getColor(), for: .normal)
+        dataButton.layer.cornerRadius = 2.5
         dataButton.setTitle("Populate Data", for: .normal)
-        let selector = #selector(populateData)
+        dataButton.addTarget(self, action: #selector(ViewController.populateData), for: .touchUpInside)
         return dataButton
     }()
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ColorSelection.gray(white: 0.9, alpha: 0.9).getColor()
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-     
-        
     }
     
-                                             ///POPULATE DATA
-    func populateData() {
-        
-        let birthDate = addDate()
-        birthDateField.text = "\(birthDate)"
-        firstNameField.text = "First Name"
-        lastNameField.text = "Last Name"
+                                              ///DATE COMPONENTS
+    func addDateMonth() -> Int {
+        let date = Date()
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: date)
+        return month
     }
     
+    func addDateDay() -> Int {
+        let date = Date()
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: date)
+        return day
+    }
     
-                                            ///SHOW REQUIRED FIELD METHOD
+    func addDateYear() -> Int {
+        let date = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        return year
+    }
+    
+                                             ///SHOW CORRECT SUBUTTONS AND SET BUTTON TITLE STYLE
+    
+    func showCorrectSubButtons() {
+      
+        classicGuestSubButton.tintColor = unMarkedButtonTitleColor
+        vipGuestSubButton.tintColor = unMarkedButtonTitleColor
+        freeChildSubButton.tintColor = unMarkedButtonTitleColor
+        seasonPassGuestSubButton.tintColor = unMarkedButtonTitleColor
+        seniorGuestSubButton.tintColor = unMarkedButtonTitleColor
+        employeeFoodServicesSubButton.tintColor = unMarkedButtonTitleColor
+        employeeRideServicesSubButton.tintColor = unMarkedButtonTitleColor
+        employeeMaintenanceSubButton.tintColor = unMarkedButtonTitleColor
+        contractEmployeeSubButton.tintColor = unMarkedButtonTitleColor
+        
+        if guestButton.isHighlighted {
+            
+            employeeSubButtonStackView.isHidden = true
+            guestSubButtonStackView.isHidden = false
+            guestButton.tintColor = markedButtonTitleColor
+            employeeButton.tintColor = unMarkedButtonTitleColor
+            managerButton.tintColor = unMarkedButtonTitleColor
+            vendorButton.tintColor = unMarkedButtonTitleColor
+            
+    
+        }else if employeeButton.isHighlighted {
+            guestSubButtonStackView.isHidden = true
+            employeeSubButtonStackView.isHidden = false
+            guestButton.tintColor = unMarkedButtonTitleColor
+            employeeButton.tintColor = markedButtonTitleColor
+            managerButton.tintColor = unMarkedButtonTitleColor
+            vendorButton.tintColor = unMarkedButtonTitleColor
+          
+        }else if managerButton.isHighlighted {
+            guestSubButtonStackView.isHidden = true
+            employeeSubButtonStackView.isHidden = true
+            guestButton.tintColor = unMarkedButtonTitleColor
+            employeeButton.tintColor = unMarkedButtonTitleColor
+            managerButton.tintColor = markedButtonTitleColor
+            vendorButton.tintColor = unMarkedButtonTitleColor
+            
+            
+        }else if vendorButton.isHighlighted {
+            guestSubButtonStackView.isHidden = true
+            employeeSubButtonStackView.isHidden = true
+            guestButton.tintColor = unMarkedButtonTitleColor
+            employeeButton.tintColor = unMarkedButtonTitleColor
+            managerButton.tintColor = unMarkedButtonTitleColor
+            vendorButton.tintColor = markedButtonTitleColor
+        }
+    }
+                                           ///SET SUBUTTON TITLE STYLE
+    
+    func setSubButtonTitleStyle() {
+        
+        if classicGuestSubButton.isHighlighted {
+            classicGuestSubButton.tintColor = markedButtonTitleColor
+            vipGuestSubButton.tintColor = unMarkedButtonTitleColor
+            freeChildSubButton.tintColor = unMarkedButtonTitleColor
+            seasonPassGuestSubButton.tintColor = unMarkedButtonTitleColor
+            seniorGuestSubButton.tintColor = unMarkedButtonTitleColor
+        
+        }else if vipGuestSubButton.isHighlighted {
+            classicGuestSubButton.tintColor = unMarkedButtonTitleColor
+            vipGuestSubButton.tintColor = markedButtonTitleColor
+            freeChildSubButton.tintColor = unMarkedButtonTitleColor
+            seasonPassGuestSubButton.tintColor = unMarkedButtonTitleColor
+            seniorGuestSubButton.tintColor = unMarkedButtonTitleColor
+            
+        }else if freeChildSubButton.isHighlighted {
+            classicGuestSubButton.tintColor = unMarkedButtonTitleColor
+            vipGuestSubButton.tintColor = unMarkedButtonTitleColor
+            freeChildSubButton.tintColor = markedButtonTitleColor
+            seasonPassGuestSubButton.tintColor = unMarkedButtonTitleColor
+            seniorGuestSubButton.tintColor = unMarkedButtonTitleColor
+            
+        }else if seasonPassGuestSubButton.isHighlighted {
+            classicGuestSubButton.tintColor = unMarkedButtonTitleColor
+            vipGuestSubButton.tintColor = unMarkedButtonTitleColor
+            freeChildSubButton.tintColor = unMarkedButtonTitleColor
+            seasonPassGuestSubButton.tintColor = markedButtonTitleColor
+            seniorGuestSubButton.tintColor = unMarkedButtonTitleColor
+            
+        }else if seniorGuestSubButton.isHighlighted {
+            classicGuestSubButton.tintColor = unMarkedButtonTitleColor
+            vipGuestSubButton.tintColor = unMarkedButtonTitleColor
+            freeChildSubButton.tintColor = unMarkedButtonTitleColor
+            seasonPassGuestSubButton.tintColor = unMarkedButtonTitleColor
+            seniorGuestSubButton.tintColor = markedButtonTitleColor
+
+            
+        }else if employeeFoodServicesSubButton.isHighlighted {
+            employeeFoodServicesSubButton.tintColor = markedButtonTitleColor
+            employeeRideServicesSubButton.tintColor = unMarkedButtonTitleColor
+            employeeMaintenanceSubButton.tintColor = unMarkedButtonTitleColor
+            contractEmployeeSubButton.tintColor = unMarkedButtonTitleColor
+
+        }else if employeeRideServicesSubButton.isHighlighted {
+            employeeFoodServicesSubButton.tintColor = unMarkedButtonTitleColor
+            employeeRideServicesSubButton.tintColor = markedButtonTitleColor
+            employeeMaintenanceSubButton.tintColor = unMarkedButtonTitleColor
+            contractEmployeeSubButton.tintColor = unMarkedButtonTitleColor
+            
+        }else if employeeMaintenanceSubButton.isHighlighted {
+            employeeFoodServicesSubButton.tintColor = unMarkedButtonTitleColor
+            employeeRideServicesSubButton.tintColor = unMarkedButtonTitleColor
+            employeeMaintenanceSubButton.tintColor = markedButtonTitleColor
+            contractEmployeeSubButton.tintColor = unMarkedButtonTitleColor
+
+            
+        }else if contractEmployeeSubButton.isHighlighted {
+            employeeFoodServicesSubButton.tintColor = unMarkedButtonTitleColor
+            employeeRideServicesSubButton.tintColor = unMarkedButtonTitleColor
+            employeeMaintenanceSubButton.tintColor = unMarkedButtonTitleColor
+            contractEmployeeSubButton.tintColor = markedButtonTitleColor
+        }
+    }
+    
+                                            ///SHOW REQUIRED FIELDS
     
     func showRequiredField()  {
         
-        if employeeFoodServicesSubButton.isSelected || employeeRideServicesSubButton.isSelected || employeeMaintenanceSubButton.isSelected || managerButton.isSelected{
-            firstNameField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            lastNameField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            streetAddressField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            cityField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            stateField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            zipCodeField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            
-        }else if freeChildSubButton.isSelected {
-            birthDateField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            
-        }else{
-            print("No personal information required")
-        }
+        setSubButtonTitleStyle()
         
+        if employeeFoodServicesSubButton.isHighlighted || employeeRideServicesSubButton.isHighlighted || employeeMaintenanceSubButton.isHighlighted || managerButton.isHighlighted || seasonPassGuestSubButton.isHighlighted {
+        
+            tranformTextFieldEditBegan(firstNameField, firstNameLabel)
+            tranformTextFieldEditBegan(lastNameField, lastNameLabel)
+            tranformTextFieldEditBegan(streetAddressField, streetAddressLabel)
+            tranformTextFieldEditBegan(cityField, cityLabel)
+            tranformTextFieldEditBegan(stateField, stateLabel)
+            tranformTextFieldEditBegan(zipCodeField, zipCodeLabel)
+            
+            transformTextFieldEditEnd(birthDateField)
+            transformTextFieldEditEnd(ssnField)
+            transformTextFieldEditEnd(projectField)
+            transformTextFieldEditEnd(companyField)
+            
+        }else if freeChildSubButton.isHighlighted {
+            
+            do {
+                throw PassError.birthInfo
+            }catch PassError.birthInfo {
+                showAlertWith(title: "Free Child Guest must be under 5 years old", message: "Please Confirm Note")
+            }catch let error {
+                fatalError(error.localizedDescription)
+            }
+            
+            setSubButtonTitleStyle()
+            
+            tranformTextFieldEditBegan(birthDateField, birthDateLabel)
+            
+            transformTextFieldEditEnd(ssnField)
+            transformTextFieldEditEnd(projectField)
+            transformTextFieldEditEnd(firstNameField)
+            transformTextFieldEditEnd(lastNameField)
+            transformTextFieldEditEnd(companyField)
+            transformTextFieldEditEnd(streetAddressField)
+            transformTextFieldEditEnd(cityField)
+            transformTextFieldEditEnd(stateField)
+            transformTextFieldEditEnd(zipCodeField)
+            
+        }else if seniorGuestSubButton.isHighlighted {
+            
+            tranformTextFieldEditBegan(firstNameField, firstNameLabel)
+            tranformTextFieldEditBegan(lastNameField, lastNameLabel)
+            tranformTextFieldEditBegan(birthDateField, birthDateLabel)
+            
+            transformTextFieldEditEnd(ssnField)
+            transformTextFieldEditEnd(projectField)
+            transformTextFieldEditEnd(companyField)
+            transformTextFieldEditEnd(streetAddressField)
+            transformTextFieldEditEnd(cityField)
+            transformTextFieldEditEnd(stateField)
+            transformTextFieldEditEnd(zipCodeField)
+         
+        }else if contractEmployeeSubButton.isHighlighted {
+            
+            tranformTextFieldEditBegan(birthDateField, birthDateLabel)
+            tranformTextFieldEditBegan(ssnField, ssnLabel)
+            tranformTextFieldEditBegan(projectField, projectLabel)
+            tranformTextFieldEditBegan(firstNameField, firstNameLabel)
+            tranformTextFieldEditBegan(lastNameField, lastNameLabel)
+            tranformTextFieldEditBegan(streetAddressField, streetAddressLabel)
+            tranformTextFieldEditBegan(cityField, cityLabel)
+            tranformTextFieldEditBegan(stateField, stateLabel)
+            tranformTextFieldEditBegan(zipCodeField, zipCodeLabel)
+            
+            transformTextFieldEditEnd(companyField)
+        
+        
+        }else if vendorButton.isHighlighted{
+            
+            tranformTextFieldEditBegan(firstNameField, firstNameLabel)
+            tranformTextFieldEditBegan(lastNameField, lastNameLabel)
+            tranformTextFieldEditBegan(companyField, companyLabel)
+            tranformTextFieldEditBegan(birthDateField, birthDateLabel)
+            
+            transformTextFieldEditEnd(ssnField)
+            transformTextFieldEditEnd(projectField)
+            transformTextFieldEditEnd(streetAddressField)
+            transformTextFieldEditEnd(cityField)
+            transformTextFieldEditEnd(stateField)
+            transformTextFieldEditEnd(zipCodeField)
+            
+        }else if classicGuestSubButton.isHighlighted || vipGuestSubButton.isHighlighted {
+            
+            transformTextFieldEditEnd(birthDateField)
+            transformTextFieldEditEnd(ssnField)
+            transformTextFieldEditEnd(projectField)
+            transformTextFieldEditEnd(firstNameField)
+            transformTextFieldEditEnd(lastNameField)
+            transformTextFieldEditEnd(companyField)
+            transformTextFieldEditEnd(streetAddressField)
+            transformTextFieldEditEnd(cityField)
+            transformTextFieldEditEnd(stateField)
+            transformTextFieldEditEnd(zipCodeField)
+        }
     }
                                              ///POSITIONING SUBVIEWS
     
@@ -426,7 +663,7 @@ class ViewController: UIViewController {
             ])
                                              ///MAIN BUTTONS
         
-       buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.distribution = UIStackViewDistribution.fillEqually
         generatePassView.addSubview(buttonStackView)
         NSLayoutConstraint.activate([
@@ -496,7 +733,7 @@ class ViewController: UIViewController {
         generatePassView.addConstraint(birthSSNProjectStackViewLabelsTopConstrain)
         
         birthSSNProjectStackViewLabels.addArrangedSubview(birthDateLabel)
-        birthSSNProjectStackViewLabels.addArrangedSubview(snnLabel)
+        birthSSNProjectStackViewLabels.addArrangedSubview(ssnLabel)
         birthSSNProjectStackViewLabels.addArrangedSubview(projectLabel)
         
         birthSSNProjectStackViewTextFields.translatesAutoresizingMaskIntoConstraints = false
@@ -512,8 +749,8 @@ class ViewController: UIViewController {
         birthDateField.frame.size.width = 180.0
         birthSSNProjectStackViewTextFields.addArrangedSubview(birthDateField)
         
-        snnField.frame.size.width = 180.0
-        birthSSNProjectStackViewTextFields.addArrangedSubview(snnField)
+        ssnField.frame.size.width = 180.0
+        birthSSNProjectStackViewTextFields.addArrangedSubview(ssnField)
         
         projectField.frame.size.width = 180.0
         birthSSNProjectStackViewTextFields.addArrangedSubview(projectField)
@@ -697,165 +934,199 @@ class ViewController: UIViewController {
         navigateButtonsStackView.addArrangedSubview(populateDataButton)
         }
     
-                                             ///SHOW CORRECT SUBUTTONS
+                                              ///TRANSFORM TEXT FIELDS ON EDITING
     
-    func showCorrectSubButtons() {
-        if guestButton.isHighlighted {
-            employeeSubButtonStackView.isHidden = true
-            guestSubButtonStackView.isHidden = false
-        }else if employeeButton.isHighlighted {
-            guestSubButtonStackView.isHidden = true
-            employeeSubButtonStackView.isHidden = false
-        }else if managerButton.isHighlighted || vendorButton.isHighlighted {
-            guestSubButtonStackView.isHidden = true
-            employeeSubButtonStackView.isHidden = true
+    func tranformTextFieldEditBegan(_ senderField: UITextField, _ senderLabel: UILabel) {
+        
+        switch senderField {
+        case senderField:
+            senderField.textColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor()
+            senderField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
+            senderField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
+            senderField.layer.borderWidth = 1.6
+            senderField.textColor = ColorSelection.gray(white: 0.35, alpha: 0.9).getColor()
+        default:
+            break
         }
-    }
-    
-    func tranformTextFieldEditBegan(_ sender: UITextField) {
         
-        
-        switch sender {
-        case birthDateField:
-            birthDateField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            birthDateField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            birthDateField.layer.borderWidth = 1.6
-        case snnField:
-            snnField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            snnField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            snnField.layer.borderWidth = 1.6
-        case projectField:
-            projectField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            projectField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            projectField.layer.borderWidth = 1.6
-        case firstNameField:
-            firstNameField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            firstNameField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            firstNameField.layer.borderWidth = 1.6
-        case lastNameField:
-            lastNameField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            lastNameField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            lastNameField.layer.borderWidth = 1.6
-        case companyField:
-            companyField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            companyField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            companyField.layer.borderWidth = 1.6
-        case streetAddressField:
-            streetAddressField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            streetAddressField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            streetAddressField.layer.borderWidth = 1.6
-        case cityField:
-            cityField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            cityField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            cityField.layer.borderWidth = 1.6
-        case stateField:
-            stateField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            stateField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            stateField.layer.borderWidth = 1.6
-        case zipCodeField:
-            zipCodeField.backgroundColor = ColorSelection.white(white: 1.0, alpha: 1.0).getColor()
-            zipCodeField.layer.borderColor = ColorSelection.gray(white: 0.6, alpha: 1.0).getColor().cgColor
-            zipCodeField.layer.borderWidth = 1
+        switch senderLabel {
+        case senderLabel:
+            senderLabel.textColor = ColorSelection.gray(white: 0.3, alpha: 0.9).getColor()
         default:
             break
         }
     }
     
-    func transformTextFieldEditEnd(_ sender: UITextField) {
+    func transformTextFieldEditEnd(_ senderField: UITextField) {
         
-        switch sender {
+        switch senderField {
+        case senderField:
+            senderField.textColor = ColorSelection.gray(white: 0.5, alpha: 0.9).getColor()
+            senderField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
+            senderField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
+            senderField.layer.borderWidth = 1.3
+        default:
+            break
+        }
+        
+        switch senderField {
         case birthDateField:
-            birthDateField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            birthDateField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            birthDateField.layer.borderWidth = 1.3
-        case snnField:
-            snnField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            snnField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            snnField.layer.borderWidth = 1.3
-        case projectField:
-            projectField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            projectField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            projectField.layer.borderWidth = 1.3
+            birthDateLabel.textColor = unMarkedFieldLabelColor
         case firstNameField:
-            firstNameField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            firstNameField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            firstNameField.layer.borderWidth = 1.3
+            firstNameLabel.textColor = unMarkedFieldLabelColor
         case lastNameField:
-            lastNameField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            lastNameField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            lastNameField.layer.borderWidth = 1.3
+            lastNameLabel.textColor = unMarkedFieldLabelColor
         case companyField:
-            companyField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            companyField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            companyField.layer.borderWidth = 1.3
+            companyLabel.textColor = unMarkedFieldLabelColor
         case streetAddressField:
-            streetAddressField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            streetAddressField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            streetAddressField.layer.borderWidth = 1.3
+            streetAddressLabel.textColor = unMarkedFieldLabelColor
         case cityField:
-            cityField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            cityField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            cityField.layer.borderWidth = 1.3
+            cityLabel.textColor = unMarkedFieldLabelColor
         case stateField:
-            stateField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            stateField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            stateField.layer.borderWidth = 1.3
+            stateLabel.textColor = unMarkedFieldLabelColor
         case zipCodeField:
-            zipCodeField.backgroundColor = ColorSelection.purple(red: 0.81 , green: 0.80, blue: 0.83, alpha: 1.0).getColor()
-            zipCodeField.layer.borderColor = ColorSelection.gray(white: 0.7, alpha: 0.9).getColor().cgColor
-            zipCodeField.layer.borderWidth = 1.3
+            zipCodeLabel.textColor = unMarkedFieldLabelColor
+        case ssnField:
+            ssnLabel.textColor = unMarkedFieldLabelColor
+        case projectField:
+            projectLabel.textColor = unMarkedFieldLabelColor
         default:
             break
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-                                            ///CHECK FIELDS METHOD
+                                            ///CHECK FIELDS
 
     func checkIfRightFieldIsFilled() {
         
+        let visitDate = "\(addDateMonth())/\(addDateDay())/\(addDateYear())"
+        
         do{
        
-        if let firstName = firstNameField.text, let lastName = lastNameField.text, let streetAddress = streetAddressField.text, let city = cityField.text, let state = stateField.text, let zipCode = zipCodeField.text, let birthDate = birthDateField.text {
+            if let birthDate = birthDateField.text, let ssn = ssnField.text, let project = projectField.text, let firstName = firstNameField.text, let lastName = lastNameField.text, let company = companyField.text , let streetAddress = streetAddressField.text, let city = cityField.text, let state = stateField.text, let zipCode = zipCodeField.text {
             
-            if firstName == "" && lastName == "" && streetAddress == "" && city == "" && state == "" && zipCode == "" && (employeeFoodServicesSubButton.isSelected || employeeRideServicesSubButton.isSelected || employeeMaintenanceSubButton.isSelected || managerButton.isSelected) {
-                throw PassError.filledInformationRequired
-            
-            }else if birthDate == "" && (freeChildSubButton.isSelected) {
-                throw PassError.filledBirthInformationRequired
-            }else{
-                performSegue(withIdentifier: "segue", sender: nil)
-           }
-            
-        }
+                if classicGuestSubButton.tintColor == markedButtonTitleColor || vipGuestSubButton.tintColor == markedButtonTitleColor {
+                    throw PassError.noInformationRequired
+                    
+                }else if freeChildSubButton.tintColor == markedButtonTitleColor && (birthDateLabel.textColor == markedFieldLabelColor) && birthDate == "" {
+                    throw PassError.fillBirthInformationRequired
+                    
+                }else if (employeeFoodServicesSubButton.tintColor == markedButtonTitleColor || employeeRideServicesSubButton.tintColor == markedButtonTitleColor || employeeMaintenanceSubButton.tintColor == markedButtonTitleColor || managerButton.tintColor == markedButtonTitleColor || seasonPassGuestSubButton.tintColor == markedButtonTitleColor) && (firstNameLabel.textColor == markedFieldLabelColor || lastNameLabel.textColor == markedFieldLabelColor || streetAddressLabel.textColor == markedFieldLabelColor || cityLabel.textColor == markedFieldLabelColor || stateLabel.textColor == markedFieldLabelColor || zipCodeLabel.textColor == markedFieldLabelColor) && (firstName == "" || lastName == "" || streetAddress == "" || city == "" || state == "" || zipCode == "") {
+                    throw PassError.fillGuestOrEmployeeInformationRequired
+                    
+                }else if seniorGuestSubButton.tintColor == markedButtonTitleColor && (birthDateLabel.textColor == markedFieldLabelColor || firstNameLabel.textColor == markedFieldLabelColor || lastNameLabel.textColor == markedFieldLabelColor) && (birthDate == "" || firstName == "" || lastName == "") {
+                    throw PassError.fillSeniorGuestInformationRequired
     
-        }catch PassError.filledInformationRequired {
-            let alertController = UIAlertController(title: "Information Required", message: "Please fill required information", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertController.addAction(alertAction)
+                }else if contractEmployeeSubButton.tintColor == markedButtonTitleColor && (birthDateLabel.textColor == markedFieldLabelColor || ssnLabel.textColor == markedFieldLabelColor || projectLabel.textColor == markedFieldLabelColor || firstNameLabel.textColor == markedFieldLabelColor || lastNameLabel.textColor == markedFieldLabelColor || streetAddressLabel.textColor == markedFieldLabelColor || cityLabel.textColor == markedFieldLabelColor || stateLabel.textColor == markedFieldLabelColor || zipCodeLabel.textColor == markedFieldLabelColor) && (birthDate == "" || ssn == "" || project == "" || firstName == "" || lastName == "" || streetAddress == "" || city == "" || state == "" || zipCode == "") {
+                    throw PassError.fillContractEmployeeInformationRequired
+                  
+                }else if vendorButton.tintColor == markedButtonTitleColor && (birthDateLabel.textColor == markedFieldLabelColor || firstNameLabel.textColor == markedFieldLabelColor || lastNameLabel.textColor == markedFieldLabelColor || companyLabel.textColor == markedFieldLabelColor) && (birthDate == "" || firstName == "" || lastName == "" || company == "" || visitDate == "") {
+                    throw PassError.fillVendorInformationRequired
+                }else{
+                    performSegue(withIdentifier: "segue", sender: nil)
+                }
+            }
+        }catch PassError.noInformationRequired {
+            showAlertWith(title: "No Personal Info Required", message: "Please Confirm Note")
             
-            print(alertController)
+        }catch PassError.fillBirthInformationRequired {
+            showAlertWith(title: "Free Child Guest Info Required", message: "Please select FREE CHILD GUEST for requirements")
             
-        }catch PassError.filledBirthInformationRequired {
-            let alertControllerI = UIAlertController(title: "Birth Information Required", message: "Please fill birth information", preferredStyle: .alert)
-            let alertActionI = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertControllerI.addAction(alertActionI)
+        }catch PassError.fillGuestOrEmployeeInformationRequired {
+            showAlertWith(title: "Guest Or Employee Info Required" , message: "Please select GUEST or EMPLOYEE for requirements")
             
-            print(alertControllerI)
-    
+        }catch PassError.fillSeniorGuestInformationRequired {
+            showAlertWith(title: "Senior Guest Info Required", message: "Please select SENIOR GUEST for requirements")
+            
+        }catch PassError.fillContractEmployeeInformationRequired {
+            showAlertWith(title: "Contract Employee Info Required", message: "Please select CONTRACT EMPLOYEE for requirements")
+            
+        }catch PassError.fillVendorInformationRequired {
+            showAlertWith(title: "Vendor Info Required", message: "Please select VENDOR for requirements")
+            
         }catch let error {
             fatalError(error.localizedDescription)
         }
     }
-    
+                                            ///POPULATE DATA
+   
+    func populateData() {
+        if classicGuestSubButton.tintColor == markedButtonTitleColor || vipGuestSubButton.tintColor == markedButtonTitleColor {
+            checkIfRightFieldIsFilled()
+            
+        }else if freeChildSubButton.tintColor == markedButtonTitleColor {
+            birthDateField.text = "\(addDateMonth())/\(addDateDay())/\(addDateYear())"
+            
+        }else if employeeFoodServicesSubButton.tintColor == markedButtonTitleColor || employeeRideServicesSubButton.tintColor == markedButtonTitleColor || employeeMaintenanceSubButton.tintColor == markedButtonTitleColor || managerButton.tintColor == markedButtonTitleColor || seasonPassGuestSubButton.tintColor == markedButtonTitleColor {
+            firstNameField.text = "First Name"
+            lastNameField.text = "Last Name"
+            streetAddressField.text = "Some Address"
+            cityField.text = "City"
+            stateField.text = "State"
+            zipCodeField.text = "00000"
+
+            
+        }else if seniorGuestSubButton.tintColor == markedButtonTitleColor {
+            birthDateField.text = "00/00/0000"
+            firstNameField.text = "First Name"
+            lastNameField.text = "Last Name"
+            
+        }else if contractEmployeeSubButton.tintColor == markedButtonTitleColor {
+            birthDateField.text = "00/00/0000"
+            ssnField.text = "000-00-000"
+            projectField.text = "000000"
+            firstNameField.text = "First Name"
+            lastNameField.text = "Last Name"
+            streetAddressField.text = "Some Address"
+            cityField.text = "City"
+            stateField.text = "State"
+            zipCodeField.text = "00000"
+            
+        }else if vendorButton.tintColor == markedButtonTitleColor {
+            birthDateField.text = "00/00/0000"
+            firstNameField.text = "First Name"
+            lastNameField.text = "Last Name"
+            companyField.text = "Company"
+        }
+        
+        if birthDateField.backgroundColor == unMarkedTextFieldColor {
+            birthDateField.text = nil
+        }
+        if ssnField.backgroundColor == unMarkedTextFieldColor {
+            ssnField.text = nil
+        }
+        
+        if projectField.backgroundColor == unMarkedTextFieldColor {
+            projectField.text = nil
+        }
+        
+        if firstNameField.backgroundColor == unMarkedTextFieldColor {
+            firstNameField.text = ""
+        }
+        
+        if lastNameField.backgroundColor == unMarkedTextFieldColor {
+            lastNameField.text = ""
+        }
+        
+        if companyField.backgroundColor == unMarkedTextFieldColor {
+            companyField.text = ""
+        }
+        
+        if streetAddressField.backgroundColor == unMarkedTextFieldColor {
+            streetAddressField.text = ""
+        }
+        
+        if cityField.backgroundColor == unMarkedTextFieldColor {
+            cityField.text = ""
+        }
+        
+        if stateField.backgroundColor == unMarkedTextFieldColor {
+            stateField.text = ""
+        }
+        
+        if zipCodeField.backgroundColor == unMarkedTextFieldColor {
+            zipCodeField.text = ""
+        }
+    }
                                            ///PREPARE SEQUE
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -863,15 +1134,16 @@ class ViewController: UIViewController {
         
                                            ///ADD CORRECT ENTRANT NAMES
         
-        newPassViewController.entrantFirstNameData = "\(String(describing: firstNameField.text))"
-        newPassViewController.entrantLastNameData = "\(String(describing: lastNameField.text))"
+        newPassViewController.entrantFirstNameData = "\(firstNameField.text!)"
+        newPassViewController.entrantLastNameData = "\(lastNameField.text!)"
+        newPassViewController.birthInfo = ""
 
                                            ///ADD CORRECT ENTRANT TYPE DATA
         
         let allRideData: String = "All rides access"
         let skipRideData: String = "Skip ride lines"
         
-        if classicGuestSubButton.isHighlighted{
+        if classicGuestSubButton.tintColor == markedButtonTitleColor {
             newPassViewController.entrantTypeData = classicGuestSubButton.titleLabel!.text!
             if EntrantType.classicGuest.entrantRideAccess.accessAllRides == true || EntrantType.classicGuest.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -883,7 +1155,7 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.classicGuest.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.classicGuest.entrantDiscountAccess.discountOnMerchandise
             
-        }else if vipGuestSubButton.isHighlighted{
+        }else if vipGuestSubButton.tintColor == markedButtonTitleColor {
             newPassViewController.entrantTypeData = vipGuestSubButton.titleLabel!.text!
             if EntrantType.vipGuest.entrantRideAccess.accessAllRides == true || EntrantType.vipGuest.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -896,7 +1168,7 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.vipGuest.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.vipGuest.entrantDiscountAccess.discountOnMerchandise
             
-        }else if freeChildSubButton.isHighlighted{
+        }else if freeChildSubButton.tintColor == markedButtonTitleColor {
             newPassViewController.entrantTypeData = freeChildSubButton.titleLabel!.text!
             if EntrantType.freeChildGuest.entrantRideAccess.accessAllRides == true || EntrantType.freeChildGuest.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -909,12 +1181,37 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.freeChildGuest.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.freeChildGuest.entrantDiscountAccess.discountOnMerchandise
             
-            let birthDate = addDate()
-            if birthDateField.text == birthDate {
-                newPassViewController.birthInfo = "Dear Guest,all the best for your SPECIAL DAY in our Park"
+            if birthDateField.text == "\(addDateMonth())/\(addDateDay())/\(addDateYear())" {
+                newPassViewController.birthInfo = "· Dear Guest all the best for BIRTHDAY!!"
             }
-        }
-        if employeeFoodServicesSubButton.isHighlighted{
+            
+        }else if seasonPassGuestSubButton.tintColor == markedButtonTitleColor {
+            newPassViewController.entrantTypeData = seasonPassGuestSubButton.titleLabel!.text!
+            if EntrantType.seasonPassGuest.entrantRideAccess.accessAllRides == true || EntrantType.seasonPassGuest.entrantRideAccess.skipAllRideLines == true {
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = skipRideData
+            }else{
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = ""
+            }
+            
+            newPassViewController.entrantDiscountFoodData = EntrantType.seasonPassGuest.entrantDiscountAccess.discountOnFood
+            newPassViewController.entrantDiscountMerchandiseData = EntrantType.seasonPassGuest.entrantDiscountAccess.discountOnMerchandise
+            
+        }else if seniorGuestSubButton.tintColor == markedButtonTitleColor {
+            newPassViewController.entrantTypeData = seniorGuestSubButton.titleLabel!.text!
+            if EntrantType.seniorGuest.entrantRideAccess.accessAllRides == true || EntrantType.seniorGuest.entrantRideAccess.skipAllRideLines == true {
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = skipRideData
+            }else{
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = ""
+            }
+            
+            newPassViewController.entrantDiscountFoodData = EntrantType.seniorGuest.entrantDiscountAccess.discountOnFood
+            newPassViewController.entrantDiscountMerchandiseData = EntrantType.seniorGuest.entrantDiscountAccess.discountOnMerchandise
+            
+        }else if employeeFoodServicesSubButton.tintColor == markedButtonTitleColor {
             newPassViewController.entrantTypeData = employeeFoodServicesSubButton.titleLabel!.text!
             if EntrantType.hourlyEmployeeFoodService.entrantRideAccess.accessAllRides == true || EntrantType.hourlyEmployeeFoodService.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -927,7 +1224,7 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.hourlyEmployeeFoodService.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.hourlyEmployeeFoodService.entrantDiscountAccess.discountOnMerchandise
         
-        }else if employeeRideServicesSubButton.isHighlighted{
+        }else if employeeRideServicesSubButton.tintColor == markedButtonTitleColor {
             newPassViewController.entrantTypeData = employeeRideServicesSubButton.titleLabel!.text!
             if EntrantType.hourlyEmployeeRideService.entrantRideAccess.accessAllRides == true || EntrantType.hourlyEmployeeRideService.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -940,7 +1237,7 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.hourlyEmployeeRideService.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.hourlyEmployeeRideService.entrantDiscountAccess.discountOnMerchandise
             
-        }else if employeeMaintenanceSubButton.isHighlighted{
+        }else if employeeMaintenanceSubButton.tintColor == markedButtonTitleColor {
             newPassViewController.entrantTypeData = employeeMaintenanceSubButton.titleLabel!.text!
             if EntrantType.hourlyEmployeeMaintenance.entrantRideAccess.accessAllRides == true || EntrantType.hourlyEmployeeMaintenance.entrantRideAccess.skipAllRideLines == true {
                 newPassViewController.entrantAllRidesData = allRideData
@@ -952,13 +1249,23 @@ class ViewController: UIViewController {
             
             newPassViewController.entrantDiscountFoodData = EntrantType.hourlyEmployeeMaintenance.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.hourlyEmployeeMaintenance.entrantDiscountAccess.discountOnMerchandise
-        }
         
-        
-        if managerButton.isHighlighted {
+        }else if contractEmployeeSubButton.tintColor == markedButtonTitleColor {
+            newPassViewController.entrantTypeData = contractEmployeeSubButton.titleLabel!.text!
+            if EntrantType.contractEmployee.entrantRideAccess.accessAllRides == true || EntrantType.contractEmployee.entrantRideAccess.skipAllRideLines == true {
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = skipRideData
+            }else{
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = ""
+            }
+            
+            newPassViewController.entrantDiscountFoodData = EntrantType.contractEmployee.entrantDiscountAccess.discountOnFood
+            newPassViewController.entrantDiscountMerchandiseData = EntrantType.contractEmployee.entrantDiscountAccess.discountOnMerchandise
+            
+        }else if managerButton.tintColor == markedButtonTitleColor {
             newPassViewController.entrantTypeData = managerButton.titleLabel!.text!
             if EntrantType.manager.entrantRideAccess.accessAllRides == true || EntrantType.manager.entrantRideAccess.skipAllRideLines == true {
-                
                 newPassViewController.entrantAllRidesData = allRideData
                 newPassViewController.entrantSkipRidesData = skipRideData
             }else{
@@ -969,20 +1276,41 @@ class ViewController: UIViewController {
             newPassViewController.entrantDiscountFoodData = EntrantType.manager.entrantDiscountAccess.discountOnFood
             newPassViewController.entrantDiscountMerchandiseData = EntrantType.manager.entrantDiscountAccess.discountOnMerchandise
 
+        }else if vendorButton.tintColor == markedButtonTitleColor {
+            newPassViewController.entrantTypeData = vendorButton.titleLabel!.text!
+            if EntrantType.vendor.entrantRideAccess.accessAllRides == true || EntrantType.vendor.entrantRideAccess.skipAllRideLines == true {
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = skipRideData
+            }else{
+                newPassViewController.entrantAllRidesData = allRideData
+                newPassViewController.entrantSkipRidesData = ""
+            }
+            
+            newPassViewController.entrantDiscountFoodData = EntrantType.vendor.entrantDiscountAccess.discountOnFood
+            newPassViewController.entrantDiscountMerchandiseData = EntrantType.vendor.entrantDiscountAccess.discountOnMerchandise
         }
     }
     
-    
-    func addDate() -> String {
-        let date = Date()
-        let calendar = Calendar.current
-        let month = calendar.component(.month, from: date)
-        let day = calendar.component(.day, from: date)
-        let year = calendar.component(.year, from: date)
-        return "\(month)/\(day)/\(year)"
+                                           ///SET ALERTS///HELPER METHODS
+
+
+    func showAlertWith(title: String, message: String, style: UIAlertControllerStyle = .alert) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: dismissAlert)
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
+    func dismissAlert(senders : UIAlertAction) -> Void {
+        if classicGuestSubButton.tintColor == ColorSelection.white(white: 1.0, alpha: 1.0).getColor() || vipGuestSubButton.tintColor == ColorSelection.white(white: 1.0, alpha: 1.0).getColor() {
+            performSegue(withIdentifier: "segue", sender: nil)
+        }
+    }
 }
+
+
 
 
 

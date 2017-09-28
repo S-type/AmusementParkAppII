@@ -11,8 +11,13 @@ import UIKit
                                                                 ///ERROR TYPES
 
 enum PassError: Error {
-    case filledInformationRequired
-    case filledBirthInformationRequired
+    case noInformationRequired
+    case fillBirthInformationRequired
+    case birthInfo
+    case fillGuestOrEmployeeInformationRequired
+    case fillSeniorGuestInformationRequired
+    case fillContractEmployeeInformationRequired
+    case fillVendorInformationRequired
 }
                                                                 ///COLOR SELECTION BY ENUM AND ASSOCIATED VALUE
 enum ColorSelection {
@@ -21,6 +26,7 @@ enum ColorSelection {
     case gray(white: CGFloat, alpha: CGFloat)
     case purple(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
     case green(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
+    case red(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
 
     
     func getColor() -> UIColor {
@@ -29,6 +35,7 @@ enum ColorSelection {
         case .gray(let white, let alpha): return UIColor(white: white, alpha: alpha)
         case .purple(let red, let green, let blue, let alpha): return UIColor(red: red, green: green, blue: blue, alpha: alpha)
         case .green(let red, let green, let blue, let alpha): return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        case .red(let red, let green, let blue, let alpha): return UIColor(red: red, green: green, blue: blue, alpha: alpha)
         }
     }
 }
@@ -95,6 +102,10 @@ enum EntrantType {
     case hourlyEmployeeRideService
     case hourlyEmployeeMaintenance
     case manager
+    case seasonPassGuest
+    case seniorGuest
+    case contractEmployee
+    case vendor
     
 }
                                                              ///ENTRANT TYPES-EXTENSIONS
@@ -110,6 +121,10 @@ extension EntrantType {
         case .hourlyEmployeeRideService: return AreaAcces(amusementArea: true, kitchenArea: false, rideControlArea: true, maintenanceArea: false, officeArea: false)
         case .hourlyEmployeeMaintenance: return AreaAcces(amusementArea: true, kitchenArea: true,rideControlArea: true, maintenanceArea: true, officeArea: false)
         case .manager: return AreaAcces(amusementArea: true, kitchenArea: true, rideControlArea: true, maintenanceArea: true, officeArea: true)
+        case .seasonPassGuest: return AreaAcces(amusementArea: true, kitchenArea: false, rideControlArea: false, maintenanceArea: false, officeArea: false)
+        case .seniorGuest: return AreaAcces(amusementArea: true, kitchenArea: false, rideControlArea: false, maintenanceArea: false, officeArea: false)
+        case .contractEmployee: return AreaAcces(amusementArea: true, kitchenArea: true, rideControlArea: false, maintenanceArea: false, officeArea: false)
+        case .vendor: return AreaAcces(amusementArea: true, kitchenArea: true, rideControlArea: false, maintenanceArea: false, officeArea: false)
         }
     }
     
@@ -123,6 +138,11 @@ extension EntrantType {
         case .hourlyEmployeeRideService: return RideAccess(accessAllRides: true, skipAllRideLines: false)
         case .hourlyEmployeeMaintenance: return RideAccess(accessAllRides: true, skipAllRideLines: false)
         case .manager: return RideAccess(accessAllRides: true, skipAllRideLines: false)
+        case .seasonPassGuest: return RideAccess(accessAllRides: true, skipAllRideLines: true)
+        case .seniorGuest: return RideAccess(accessAllRides: true, skipAllRideLines: true)
+        case .contractEmployee: return RideAccess(accessAllRides: true, skipAllRideLines: false)
+        case .vendor: return RideAccess(accessAllRides: true, skipAllRideLines: false)
+            
         }
     }
     
@@ -136,9 +156,18 @@ extension EntrantType {
         case .hourlyEmployeeRideService: return DiscountAccess(discountOnFood: 15, discountOnMerchandise: 25)
         case .hourlyEmployeeMaintenance: return DiscountAccess(discountOnFood: 15, discountOnMerchandise: 25)
         case .manager: return DiscountAccess(discountOnFood: 25, discountOnMerchandise: 25)
+        case .seasonPassGuest: return DiscountAccess(discountOnFood: 10, discountOnMerchandise: 20)
+        case .seniorGuest: return DiscountAccess(discountOnFood: 10, discountOnMerchandise: 10)
+        case .contractEmployee: return DiscountAccess(discountOnFood: 0, discountOnMerchandise: 0)
+        case .vendor: return DiscountAccess(discountOnFood: 0, discountOnMerchandise: 0)
         }
     }
 }
+
+
+
+
+
 
 
 
